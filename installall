@@ -1,0 +1,72 @@
+#!/bin/bash
+
+#this would have been useful: http://howto.blbosti.com/2010/02/simple-ubuntu-install-script/http://howto.blbosti.com/2010/02/simple-ubuntu-install-script/
+#sudo apt-get install -y synergy
+#rvm install 1.9.2-p290
+#rvm use 1.9.2-p290 --default
+
+#sudo cp ~/Desktop/wpstart.sh /etc/init.d/
+#sudo update-rc.d wpstart.sh defaults
+
+
+#sudo apt-get update
+
+#synergyc --name box 192.168.1.118:24800
+
+
+#sudo apt-get install -y lmbench
+#sudo wget http://prdownloads.sourceforge.net/aoi/ArtOfIllusion291-Linux.zip && unzip ArtOfIllusion291-Linux.zip 
+
+#DROPBOX INSTALL
+#sudo apt-get install -y python-gpgme
+#echo "deb http://linux.dropbox.com/ubuntu $(lsb_release -cs) main" | sudo tee "/etc/apt/sources.list.d/dropbox.list" > /dev/null
+#sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
+#sudo apt-get update
+#sudo apt-get -y --force-yes install nautilus-dropbox
+#dropbox start -i
+#DROPBOX INSTALL
+
+#at end:
+#unzip ArtOfIllusion291-Linux.zip 
+#cd ArtOfIllusion
+#sudo ./aoisetup
+
+#sudo aptitude install --assume-yes build-essential bison curl git-core git-gui git-doc gcc g++ linux-headers-generic openssl libopenssl-ruby libssl-dev sqlite3 libsqlite3-dev libsqlite3-0 libreadline6 libreadline6-dev zlib1g zlib1g-dev libyaml-dev libxml2-dev libxslt-dev autoconf libpq-dev libpq-dev openjdk-6-jre vim-gnome gnome-do compizconfig-backend-gconf compiz-fusion-plugins-main compiz-plugins blender compiz-plugins-main hardinfo python python-tk unzip
+#sudo apt-get install -y python-software-properties && add-apt-repository ppa:chromium-daily/beta && sudo apt-get update && sudo apt-get install --assume-yes chromium-browser
+#sudo apt-get install -y postgresql-9.1 zsh chromium-browser git vim-gnome openntpd curl zlib1g-dev libxml2-dev libxslt1-dev libcups2-dev libssl1.0.0 postgresql-server-dev-9.1 libsqlite3-dev
+
+#cp -R .ssh /home/own/ && ssh git@github.com
+
+
+##3d printing
+#CAUSES ERRORS: python-psyco
+#sudo wget http://replicatorg.googlecode.com/files/replicatorg-0034-linux.tgz && tar -xvzf replicatorg-0034-linux.tgz
+
+#sudo add-apt-repository "deb http://archive.canonical.com/ubuntu natty partner"
+#sudo apt-add-repository ppa:flexiondotorg/java
+#sudo apt-get update
+#sudo apt-get install sun-java6-jre sun-java6-plugin
+#sudo update-alternatives --config java
+#echo "select /usr/lib/jvm/java-6-sun/jre/bin/java"
+
+
+#ssh python ruby rails gems rvm text editor - > vim w/ settings display preferences hardware / battery preferences bluetooth audio/visual/media graphics editors - blender 3d design - etc
+
+
+
+#To get a list of packages installed locally and save as a text file called packages on your desktop do this in your terminal:
+#sudo dpkg --get-selections > ~/Desktop/packages
+##Then, when installing to the new computer
+#sudo dpkg --set-selections < ~/Desktop/packages && sudo apt-get -u dselect-upgrade
+
+#Step 1: Store the list of installed packages
+#Run the following command on the source machine to store the installed packages names in ~/pkglist:
+#sudo dpkg --get-selections | sed "s/.*deinstall//" | sed "s/install$//g" > ~/pkglist
+
+#Step 2: Transfer your config
+#Use scp or rsync or even a flash drive to transfer your home directory (~/*, ~/.*), the source list (/etc/apt/sources.list) and any other files you customized or installed (like apache config under /etc or softwares on /opt) from the source machine to the target one.
+
+#Step 3: Install packages
+#On the target machine run the following command in a failsafe terminal session to install your packages:
+
+#sudo aptitude update && cat pkglist | xargs sudo aptitude install -y
