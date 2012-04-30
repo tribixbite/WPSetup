@@ -1,63 +1,87 @@
 #!/bin/bash
 
-#this would have been useful: http://howto.blbosti.com/2010/02/simple-ubuntu-install-script/http://howto.blbosti.com/2010/02/simple-ubuntu-install-script/
-#sudo apt-get install -y synergy
-#rvm install 1.9.2-p290
-#rvm use 1.9.2-p290 --default
+#TO DO:
+#Create a menu that separates actions
+#1. copy custom files/folders -> a) choose b) all in list
+#2. add/modify repos and run update -> a) choose b) all in list
+#3. download specific programs not in synaptic -> a) choose b) all in list
+#4. install programs -> a) choose b) all in list
+#5. do everything
+echo "this script requires the internet, wpstart.sh, .ssh folder (in this directory)"
+sleep 4
+echo " Welcome to tRiskItE's Ubuntu installall script.
+1 - Copy configuration files, boot scripts, ssh keys, etc
+2 - add custom repos & update sources
+3 - download non apt installation files
+4 - install all programs & start synergyc
+5 - do everything
+Please select a task: "
+read i
 
-#sudo cp ~/Desktop/wpstart.sh /etc/init.d/
-#sudo update-rc.d wpstart.sh defaults
+if [$i -eq 1 -o $i -eq 5]
+then
+#<copy custom files to new installation & enable init.d autoload
+  sudo cp wpstart.sh /etc/init.d/
+  sudo update-rc.d wpstart.sh defaults
+  sudo cp -R .ssh ~/
+#copy custom files to new installation & enable init.d autoload>
+fi
+
+if [$i -eq 2 -o $i -eq 5]
+then
+#<add repos and update
+  #<dropbox
+    sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
+    echo "deb http://linux.dropbox.com/ubuntu $(lsb_release -cs) main" | sudo tee "/etc/apt/sources.list.d/dropbox.list" > /dev/null
+  #dropbox>
+  #<replicator
+    sudo add-apt-repository "deb http://archive.canonical.com/ubuntu precise partner"
+    sudo apt-add-repository ppa:flexiondotorg/java
+  #replicator>
+  sudo apt-get update
+#add repos and update>
+fi
+if [$i -eq 3 -o $i -eq 5]
+then
+#<download packages not supported by synaptic
+  sudo wget http://prdownloads.sourceforge.net/aoi/ArtOfIllusion291-Linux.zip && unzip ArtOfIllusion291-Linux.zip 
+  sudo wget http://replicatorg.googlecode.com/files/replicatorg-0034-linux.tgz && tar -xvzf replicatorg-0034-linux.tgz
+  wget http://www.teamviewer.com/download/teamviewer_linux_x64.deb #install teamviewer
+#download packages not supported by synaptic>
+fi
+if [$i -eq 4 -o $i -eq 5]
+then
+#<install everything
+  sudo apt-get install --assume-yes -y ssh lmbench python-gpgme chromium-browser python-software-properties ubuntu-restricted-extras synergy build-essential bison curl git-core git-gui git-doc gcc g++ linux-headers-generic openjdk-6-jre vim-gnome gnome-do compizconfig-backend-gconf compiz-fusion-plugins-main compiz-plugins blender compiz-plugins-main hardinfo python python-tk unzip
+  sudo dpkg -i teamviewer_linux_x64.deb #install teamviewer
+  sudo apt-get -y --force-yes install nautilus-dropbox #install dropbox
+  sudo apt-get -f --assume-yes install
+  dropbox start -i #install dropbox
+  #<install 3d printing software AOI
+    unzip ArtOfIllusion291-Linux.zip 
+    cd ArtOfIllusion
+    sudo ./aoisetup
+  #install 3d printing software AOI>
+  #<install special components for replicatorG
+    sudo apt-get install --assume-y -y sun-java6-jre sun-java6-plugin
+    sudo update-alternatives --config java
+    echo "select /usr/lib/jvm/java-6-sun/jre/bin/java"
+  #install special components for replicatorG>
+#install everything>
+#<start programs
+  synergyc --name box 192.168.1.118:24800 &
+#start programs>
+fi
 
 
-#sudo apt-get update
-
-#synergyc --name box 192.168.1.118:24800
-
-sudo apt-get install --assume-yes -y libc6-i386 lib32asound2 lib32z1 ia32-libs
-sudo apt-get -f --assume-yes install
-#wget http://www.teamviewer.com/download/teamviewer_linux_x64.deb
-#sudo dpkg -i teamviewer_linux_x64.deb
-
-#sudo apt-get install -y lmbench
-#sudo wget http://prdownloads.sourceforge.net/aoi/ArtOfIllusion291-Linux.zip && unzip ArtOfIllusion291-Linux.zip 
-
-#DROPBOX INSTALL
-#sudo apt-get install -y python-gpgme
-#echo "deb http://linux.dropbox.com/ubuntu $(lsb_release -cs) main" | sudo tee "/etc/apt/sources.list.d/dropbox.list" > /dev/null
-#sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
-#sudo apt-get update
-#sudo apt-get -y --force-yes install nautilus-dropbox
-#dropbox start -i
-#DROPBOX INSTALL
-
-#at end:
-#unzip ArtOfIllusion291-Linux.zip 
-#cd ArtOfIllusion
-#sudo ./aoisetup
-
-#sudo aptitude install --assume-yes build-essential bison curl git-core git-gui git-doc gcc g++ linux-headers-generic openssl libopenssl-ruby libssl-dev sqlite3 libsqlite3-dev libsqlite3-0 libreadline6 libreadline6-dev zlib1g zlib1g-dev libyaml-dev libxml2-dev libxslt-dev autoconf libpq-dev libpq-dev openjdk-6-jre vim-gnome gnome-do compizconfig-backend-gconf compiz-fusion-plugins-main compiz-plugins blender compiz-plugins-main hardinfo python python-tk unzip
-#sudo apt-get install -y python-software-properties && add-apt-repository ppa:chromium-daily/beta && sudo apt-get update && sudo apt-get install --assume-yes chromium-browser
-#sudo apt-get install -y postgresql-9.1 zsh chromium-browser git vim-gnome openntpd curl zlib1g-dev libxml2-dev libxslt1-dev libcups2-dev libssl1.0.0 postgresql-server-dev-9.1 libsqlite3-dev ssh ubuntu-restricted-extras
-
-#cp -R .ssh /home/own/ && ssh git@github.com
-
-
-##3d printing
-#CAUSES ERRORS: python-psyco
-#sudo wget http://replicatorg.googlecode.com/files/replicatorg-0034-linux.tgz && tar -xvzf replicatorg-0034-linux.tgz
-
+##NOTES ONLY##
+##3d printing CAUSES ERRORS: python-psyco
 #sudo add-apt-repository "deb http://archive.canonical.com/ubuntu natty partner"
-#sudo apt-add-repository ppa:flexiondotorg/java
-#sudo apt-get update
-#sudo apt-get install sun-java6-jre sun-java6-plugin
-#sudo update-alternatives --config java
-#echo "select /usr/lib/jvm/java-6-sun/jre/bin/java"
-
-
+#chromium beta
+#sudo add-apt-repository ppa:chromium-daily/beta && sudo apt-get update && sudo apt-get install --assume-yes chromium-browser
+#this would have been useful: http://howto.blbosti.com/2010/02/simple-ubuntu-install-script/http://howto.blbosti.com/2010/02/simple-ubuntu-install-script/
+#sudo apt-get install -y 
 #ssh python ruby rails gems rvm text editor - > vim w/ settings display preferences hardware / battery preferences bluetooth audio/visual/media graphics editors - blender 3d design - etc
-
-
-
 #To get a list of packages installed locally and save as a text file called packages on your desktop do this in your terminal:
 #sudo dpkg --get-selections > ~/Desktop/packages
 ##Then, when installing to the new computer
