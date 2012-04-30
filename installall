@@ -7,27 +7,44 @@
 #3. download specific programs not in synaptic -> a) choose b) all in list
 #4. install programs -> a) choose b) all in list
 #5. do everything
-echo "this script requires the internet, wpstart.sh, .ssh folder (in this directory)"
-sleep 4
+echo "this script requires the internet, wpstart.sh, and all your home custom settings such as your .ssh folder (in the same directory as this script)"
+sleep 2
 echo " Welcome to tRiskItE's Ubuntu installall script.
 1 - Copy configuration files, boot scripts, ssh keys, etc
 2 - add custom repos & update sources
 3 - download non apt installation files
 4 - install all programs & start synergyc
 5 - do everything
+q - quit
 Please select a task: "
 read i
 
-if [$i -eq 1 -o $i -eq 5]
+if [ $i = "q" ]
+then
+exit
+fi
+
+if [ $i -eq 1 -o $i -eq 5 ]
 then
 #<copy custom files to new installation & enable init.d autoload
   sudo cp wpstart.sh /etc/init.d/
   sudo update-rc.d wpstart.sh defaults
-  sudo cp -R .ssh ~/
+  mkdir ~/.ssh
+  sudo cp -R .ssh/* ~/.ssh/
+  sudo mv ~/.bashrc ~/.bashrc_bak_wps
+  sudo cp .bashrc ~/
+  #sudo mkdir ~/.compiz-1
+  mkdir ~/.config
+  mkdir ~/.config/autostart
+  sudo cp -R .config/autostart/* ~/.config/autostart/
+  mkdir ~/.gconf
+  sudo cp -R .gconf/* ~/.gconf/
+  #sudo mkdir ~/.gconfd
+  #sudo mkdir ~/.gnome2
 #copy custom files to new installation & enable init.d autoload>
 fi
 
-if [$i -eq 2 -o $i -eq 5]
+if [ $i -eq 2 -o $i -eq 5 ]
 then
 #<add repos and update
   #<dropbox
@@ -41,7 +58,7 @@ then
   sudo apt-get update
 #add repos and update>
 fi
-if [$i -eq 3 -o $i -eq 5]
+if [ $i -eq 3 -o $i -eq 5 ]
 then
 #<download packages not supported by synaptic
   sudo wget http://prdownloads.sourceforge.net/aoi/ArtOfIllusion291-Linux.zip && unzip ArtOfIllusion291-Linux.zip 
@@ -49,7 +66,7 @@ then
   wget http://www.teamviewer.com/download/teamviewer_linux_x64.deb #install teamviewer
 #download packages not supported by synaptic>
 fi
-if [$i -eq 4 -o $i -eq 5]
+if [ $i -eq 4 -o $i -eq 5 ]
 then
 #<install everything
   sudo apt-get install --assume-yes -y ssh lmbench python-gpgme chromium-browser python-software-properties ubuntu-restricted-extras synergy build-essential bison curl git-core git-gui git-doc gcc g++ linux-headers-generic openjdk-6-jre vim-gnome gnome-do compizconfig-backend-gconf compiz-fusion-plugins-main compiz-plugins blender compiz-plugins-main hardinfo python python-tk unzip
