@@ -14,7 +14,8 @@ echo " Welcome to tRiskItE's Ubuntu installall script.
 2 - add custom repos & update sources
 3 - download non apt installation files
 4 - install all programs & start synergyc
-5 - do everything
+5 - do all of the above
+6 - Install RVM & Ruby
 q - quit
 Please select a task: "
 read i
@@ -90,7 +91,10 @@ then
 #start programs>
 fi
 
+if [ $i -eq 6 ]
+    curl -L https://get.rvm.io | bash -s stable --rails
 
+fi
 ##NOTES ONLY##
 ##3d printing CAUSES ERRORS: python-psyco
 #sudo add-apt-repository "deb http://archive.canonical.com/ubuntu natty partner"
