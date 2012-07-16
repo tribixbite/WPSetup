@@ -93,8 +93,11 @@ fi
 
 if [ $i -eq 6 ]
 then
-	curl -L https://get.rvm.io | bash -s stable --rails
 
+	/usr/bin/apt-get install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev
+	curl -L https://get.rvm.io | bash -s stable --rails
+	usermod -a -G rvm $USER
+	source /usr/local/rvm/scripts/rvm
 fi
 ##NOTES ONLY##
 ##3d printing CAUSES ERRORS: python-psyco
