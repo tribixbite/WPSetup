@@ -92,7 +92,8 @@ then
 fi
 
 if [ $i -eq 6 ]
-    curl -L https://get.rvm.io | bash -s stable --rails
+then
+	curl -L https://get.rvm.io | bash -s stable --rails
 
 fi
 ##NOTES ONLY##
