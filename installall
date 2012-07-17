@@ -16,6 +16,7 @@ echo " Welcome to tRiskItE's Ubuntu installall script.
 4 - install all programs & start synergyc
 5 - do all of the above
 6 - Install RVM & Ruby
+7 - Install VirtualBox Specific Settings
 q - quit
 Please select a task: "
 read i
@@ -25,6 +26,12 @@ then
 exit
 fi
 
+
+if [ $i = "q" ]
+then
+	sudo apt-get install xserver-xorg xserver-xorg-core
+	sudo apt-get install dkms
+fi
 if [ $i -eq 1 -o $i -eq 5 ]
 then
 #<copy custom files to new installation & enable init.d autoload
