@@ -27,10 +27,11 @@ exit
 fi
 
 
-if [ $i = "q" ]
+if [ $i = "7" ]
 then
 	sudo apt-get install xserver-xorg xserver-xorg-core
 	sudo apt-get install dkms
+exit
 fi
 if [ $i -eq 1 -o $i -eq 5 ]
 then
